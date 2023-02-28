@@ -13,7 +13,10 @@ public class Box : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        gameManager.AddScore(1);
-        Destroy(gameObject);
+        if (collision.gameObject.CompareTag("Bullet") && !gameManager.isGameOver) {
+            gameManager.AddScore(1);
+
+            Destroy(gameObject);
+        }
     }
 }

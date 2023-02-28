@@ -8,14 +8,18 @@ public class PlayerControl : MonoBehaviour
     private float deltaX;
     private Rigidbody2D rb;
 
+    private GameManager gameManager;
+
     private void Start()
     {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
         rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        if (Input.touchCount > 0 && StartManager.Instance.isGameActive)
+        if (Input.touchCount > 0 && !gameManager.isGameOver)
         {
             Touch touch = Input.GetTouch(0);
             Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);

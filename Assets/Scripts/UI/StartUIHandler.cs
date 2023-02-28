@@ -9,7 +9,7 @@ public class StartUIHandler : MonoBehaviour
 
     void Start()
     {
-        UpdateScoreText(StartManager.Instance.score);
+        UpdateScoreText(DataManager.Instance.score);
     }
 
     public void UpdateScoreText(int score)

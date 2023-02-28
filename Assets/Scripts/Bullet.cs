@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Bottom Wall") {
+        if (collision.gameObject.name == "Bottom Wall" && !gameManager.isGameOver) {
             gameManager.GameOver();
         }
     }

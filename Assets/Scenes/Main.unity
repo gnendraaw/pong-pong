@@ -1034,6 +1034,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 50164861}
+  gameOverScoreText: {fileID: 1472955318}
+  gameOverPanel: {fileID: 1808128209}
 --- !u!114 &1382682009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1281,9 +1283,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c640f2f153f916c48abd2b87ec42ed63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverPanel: {fileID: 1808128209}
+  isGameOver: 0
   targetBox: {fileID: 6859775978422575902, guid: a79c884be8aa0aa4da04ec47f75b732f, type: 3}
   bullet: {fileID: 5282715291759348761, guid: 816fc414f8f3b4340aea67de5172c2c7, type: 3}
+  uiHandler: {fileID: 1382682008}
 --- !u!4 &1673824335
 Transform:
   m_ObjectHideFlags: 0

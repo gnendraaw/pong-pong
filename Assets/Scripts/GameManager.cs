@@ -14,36 +14,47 @@ public class GameManager : MonoBehaviour
     private int currentTargetCount;
 
     private int score = 0;
+    public bool isGameOver = false;
 
-    public GameObject gameOverPanel;
     public GameObject targetBox;
     public GameObject bullet;
+
+    public UIHandler uiHandler;
 
     private void Start()
     {
         SetupGame();
 
         spawnTargetBox();
-
-        Instantiate(bullet, Vector3.up * -2f, bullet.transform.rotation);
     }
 
     void Update()
     {
-        if (Input.touchCount > 0 && !StartManager.Instance.isGameActive)
-        {
-            Time.timeScale = 1;
-            SceneManager.LoadScene(1);
+        if (Input.touchCount > 0 && isGameOver) {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Ended) {
+                RestartGame();
+            }
         }
     }
 
     void SetupGame()
     {
-        score = StartManager.Instance.score;
-        UIHandler.instance.UpdateScoreText(score);
+        isGameOver = false;
+
+        score = DataManager.Instance.score;
+        uiHandler.UpdateScoreText(score);
 
         targetCount = maxXIndex * maxYIndex;
         currentTargetCount = targetCount;
+
+        Instantiate(bullet, Vector3.up * -2f, bullet.transform.rotation);
+    }
+
+    void RestartGame()
+    {
+        SceneManager.LoadScene(1);
     }
 
     void spawnTargetBox()
@@ -71,27 +82,22 @@ public class GameManager : MonoBehaviour
         score += scoreToAdd;
         currentTargetCount--;
 
+        // reset and spawn target when all of the targets are destroyed
         if (targetCount <= 0) {
-            ResetTargetCount();
-
+            currentTargetCount = targetCount;
             spawnTargetBox();
         }
 
-        UIHandler.instance.UpdateScoreText(score);
-    }
-
-    void ResetTargetCount()
-    {
-        currentTargetCount = targetCount;
+        uiHandler.UpdateScoreText(score);
     }
 
     public void GameOver()
     {
-        StartManager.Instance.SaveScore(score);
-        StartManager.Instance.isGameActive = false;
-        gameOverPanel.SetActive(true);
+        // show game over panel
+        isGameOver = true;
+        uiHandler.ShowGameOverPanel();
 
-        // pause game time
-        Time.timeScale = 0;
+        // save player score
+        DataManager.Instance.SaveScore(score);
     }
 }
