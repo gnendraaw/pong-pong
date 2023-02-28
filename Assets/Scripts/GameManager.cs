@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     private int maxXIndex = 6;
     private int maxYIndex = 4;
 
+    private int score = 0;
+
     public GameObject targetBox;
 
     private void Start()
@@ -35,5 +37,11 @@ public class GameManager : MonoBehaviour
     float GenerateSpawnPos(int index, float minValue)
     {
         return (index * spaceBetweenSquare) + minValue;
+    }
+
+    public void AddScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
+        UIHandler.instance.UpdateScoreText(score);
     }
 }
