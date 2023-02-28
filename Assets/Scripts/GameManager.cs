@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         currentTargetCount--;
 
         // reset and spawn target when all of the targets are destroyed
-        if (targetCount <= 0) {
+        if (currentTargetCount <= 0) {
             currentTargetCount = targetCount;
             spawnTargetBox();
         }
