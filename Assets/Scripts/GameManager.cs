@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     private int currentTargetCount;
 
     private int score = 0;
+    private int bestScore;
+    private int coins = 0;
     public bool isGameOver = false;
 
     public GameObject targetBox;
@@ -43,7 +45,9 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = false;
 
-        score = DataManager.Instance.score;
+        score = 0;
+        bestScore = DataManager.Instance.score;
+        coins = DataManager.Instance.coins;
         uiHandler.UpdateScoreText(score);
 
         targetCount = maxXIndex * maxYIndex;
@@ -82,6 +86,11 @@ public class GameManager : MonoBehaviour
         score += scoreToAdd;
         currentTargetCount--;
 
+        // add 1 coin everytime player gets even value of score
+        if (score % 2 == 0) {
+            coins++;
+        }
+
         // reset and spawn target when all of the targets are destroyed
         if (currentTargetCount <= 0) {
             currentTargetCount = targetCount;
@@ -98,6 +107,11 @@ public class GameManager : MonoBehaviour
         uiHandler.ShowGameOverPanel();
 
         // save player score
-        DataManager.Instance.SaveScore(score);
+        if (bestScore < score) {
+            bestScore = score;
+            DataManager.Instance.SetScore(bestScore);
+        }
+        DataManager.Instance.AddCoins(coins);
+        DataManager.Instance.SaveGameData();
     }
 }

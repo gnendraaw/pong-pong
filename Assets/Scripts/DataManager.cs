@@ -8,6 +8,7 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance;
 
     public int score;
+    public int coins;
 
     void Awake() {
         if (Instance != null) {
@@ -23,11 +24,13 @@ public class DataManager : MonoBehaviour
     [System.Serializable]
     class SaveData {
         public int score;
+        public int coins;
     }
 
-    public void SaveScore(int score) {
+    public void SaveGameData() {
         SaveData data = new SaveData();
         data.score = score;
+        data.coins = coins;
 
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(Application.persistentDataPath + "/score.json", json);
@@ -41,6 +44,15 @@ public class DataManager : MonoBehaviour
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
             score = data.score;
+            coins = data.coins;
         }
+    }
+
+    public void SetScore(int score) {
+        this.score = score;
+    }
+
+    public void AddCoins(int coins) {
+        this.coins += coins;
     }
 }
