@@ -7,6 +7,8 @@ public class BallController : MonoBehaviour
     private Rigidbody2D rb;
 
     public float speed;
+    public float xPos;
+    public float yPos;
 
     // Start is called before the first frame update
     void Start()
@@ -16,23 +18,17 @@ public class BallController : MonoBehaviour
         Invoke("LaunchBall", 2f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            LaunchBall();
-        }
-    }
-
     void LaunchBall()
     {
-        Vector2 direction = new Vector2(GenerateRandomPos(), GenerateRandomPos());
-        rb.velocity = direction * speed;
+        xPos = GenerateRandomPos();
+        yPos = GenerateRandomPos();
+        Vector2 direction = new Vector2(xPos, yPos);
+        rb.velocity = direction * speed * Time.deltaTime;
     }
 
     float GenerateRandomPos()
     {
-        return Random.Range(-1.0f, 1.0f);
+        int rand = Random.Range(0,2);
+        return rand == 1 ? 1f : -1f;
     }
 }

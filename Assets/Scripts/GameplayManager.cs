@@ -20,4 +20,9 @@ public class GameplayManager : MonoBehaviour
     {
         
     }
+
+    public void AddScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
+    }
 }
