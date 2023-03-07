@@ -6,15 +6,16 @@ public class EnemyController : MonoBehaviour
 {
     public float speed;
     private GameObject ball;
+    private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
         ball = GameObject.Find("Ball");
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         MoveEnemy();
     }
@@ -23,8 +24,9 @@ public class EnemyController : MonoBehaviour
     {
         if (!GameplayManager.isGameOver && !GameplayManager.isGamePaused && ball.transform.position.y > 0)
         {
-            float distance = ball.transform.position.x - transform.position.x;
-            transform.position += Vector3.right * distance * speed * Time.deltaTime;
+            float xDir = ball.transform.position.x - transform.position.x;
+            Vector2 dir = new Vector2(xDir, transform.position.y);
+            rb.velocity = dir * speed;
         }
     }
 }

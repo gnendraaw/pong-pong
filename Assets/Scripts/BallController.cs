@@ -5,30 +5,24 @@ using UnityEngine;
 public class BallController : MonoBehaviour
 {
     private Rigidbody2D rb;
-
     public float speed;
-    public float xPos;
-    public float yPos;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 
-        Invoke("LaunchBall", 2f);
+        Invoke("LaunchBall", 1f);
     }
 
     void LaunchBall()
     {
-        xPos = GenerateRandomPos();
-        yPos = GenerateRandomPos();
-        Vector2 direction = new Vector2(xPos, yPos);
-        rb.velocity = direction * speed * Time.deltaTime;
+        Vector2 direction = new Vector2(GenerateRandomPos(), GenerateRandomPos());
+        rb.velocity = direction * speed;
     }
 
     float GenerateRandomPos()
     {
-        int rand = Random.Range(0,2);
-        return rand == 1 ? 1f : -1f;
+        return Random.Range(0, 2) == 1 ? 1f : -1f;
     }
 }
