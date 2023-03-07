@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount > 0 && !GameplayManager.isGameOver)
+        if (Input.touchCount > 0 && !GameplayManager.Instance.isGameOver && !GameplayManager.Instance.isGamePaused)
         {
             MovePlayer();
         }

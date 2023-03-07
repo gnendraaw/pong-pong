@@ -4,25 +4,53 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    public static bool isGameOver {get; private set;}
-    public static bool isGamePaused {get; private set;}
+    public static GameplayManager Instance;
 
-    private int score = 0;
+    public bool isGameOver {get; private set;}
+    public bool isGamePaused {get; private set;}
 
-    // Start is called before the first frame update
+    public int playerScore {get; private set;}
+    public int enemyScore {get; private set;}
+    public float countdown;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
-
+        StartCoroutine(ResetGameplay());
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddPlayerScore(int scoreToAdd) 
     {
-        
+        playerScore += scoreToAdd;
     }
 
-    public void AddScore(int scoreToAdd)
+    public void AddEnemyScore(int scoreToAdd)
     {
-        score += scoreToAdd;
+        enemyScore += scoreToAdd;
+    }
+
+    public IEnumerator ResetGameplay()
+    {
+        // reset ball behaviour
+        GameObject ball = GameObject.Find("Ball");
+        if (ball != null) 
+        {
+            ball.transform.position = Vector2.zero;
+            ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+
+        isGameOver = false;
+        isGamePaused = false;
+        countdown = 3f;
+
+        StartCoroutine(GameplayUIHandler.instance.ToggleCountdownPanel());
+
+        // give the ball velocity after countdown value reach 0
+        yield return new WaitForSeconds(countdown);
+        ball.GetComponent<BallController>().LaunchBall();
     }
 }

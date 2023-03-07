@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour
 
     void MoveEnemy()
     {
-        if (!GameplayManager.isGameOver && !GameplayManager.isGamePaused && ball.transform.position.y > 0)
+        if (!GameplayManager.Instance.isGameOver && !GameplayManager.Instance.isGamePaused && ball.transform.position.y > 0)
         {
             float xDir = ball.transform.position.x - transform.position.x;
             Vector2 dir = new Vector2(xDir, transform.position.y);
